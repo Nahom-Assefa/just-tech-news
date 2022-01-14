@@ -78,6 +78,16 @@ router.post("/", (req, res) => {
     });
 });
 
+router.post("/logout", (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
+
 router.post("/login", (req, res) => {
   // expects {email: 'lernantino@gmail.com', password: 'password1234'}
   User.findOne({
@@ -107,17 +117,7 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.post("/logout", (req, res) => {
-  if (req.session.loggedIn) {
-    req.session.destroy(() => {
-      res.status(204).end();
-    });
-    console.log("line 115, fucktology");
-  }
-  else {
-    res.status(404).end();
-  }
-});
+
 
 // PUT /api/users/1
 router.put("/:id", (req, res) => {
