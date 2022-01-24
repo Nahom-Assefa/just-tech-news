@@ -63,7 +63,7 @@ router.post("/", (req, res) => {
     email: req.body.email,
     password: req.body.password,
   })
-    .then((dbUserData) => {
+  .then((dbUserData) => {
       req.session.save(() => {
         req.session.user_id = dbUserData.id;
         req.session.username = dbUserData.username;
@@ -117,8 +117,6 @@ router.post("/login", (req, res) => {
   });
 });
 
-
-
 // PUT /api/users/1
 router.put("/:id", (req, res) => {
   // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
@@ -135,6 +133,8 @@ router.put("/:id", (req, res) => {
         res.status(400).json({ message: "No user found with this id" });
         return;
       }
+      console.log("line 138", dbUserData);
+      console.log("line 139", dbUserData[2]);
       res.json(dbUserData);
     })
     .catch((err) => {

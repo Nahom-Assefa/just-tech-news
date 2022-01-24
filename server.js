@@ -10,10 +10,15 @@ const helpers = require('./utils/helpers');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const sess = {
+  // hash based authentication code, secret property uses secret to sign session cookie 
   secret: process.env.DB_SECRET,
+  // cookie object itself used by the session
   cookie: {},
+  // Forces session to be saved back to sessionStore even if cookie hasnt been modified
   resave: false,
+  // When you make a new session the session is saved as part of the store
   saveUninitialized: true,
+  // Creates the connection with the DB, sets up session table, and allows sequelize to save the session into the db
   store: new SequelizeStore({
     db: sequelize
   })
@@ -43,14 +48,3 @@ sequelize.sync({ force: false }).then(() => {
 });
 
 
-
-
-
-// "dependencies": {
-//   "bcrypt": "^5.0.1",
-//   "dotenv": "^10.0.0",
-//   "express": "^4.17.2",
-//   "express-handlebars": "^6.0.2",
-//   "mysql2": "^2.3.3",
-//   "sequelize": "^7.0.0-alpha.4"
-// }
